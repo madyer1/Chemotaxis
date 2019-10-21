@@ -1,17 +1,21 @@
  //declare bacteria variables here   
  Bacteria first;
  Bacteria second;
- Bacteria[] colony;
+ Bacteria[] prey;
+ Bacteria[] predator;
  
  void setup()   
  {     
  	size(1000,1000);
- 	frameRate(90);
- 	int x = (int)(Math.random()*1000+1);
- 	int y = (int)(Math.random()*1000+1);
- 	colony = new Bacteria[2000];
- 	for(int i=0;i<colony.length;i++){
- 		colony[i]= new Bacteria((int)(Math.random()*1000+1), (int)(Math.random()*1000+1));
+ 	frameRate(70);
+ 	prey = new Bacteria[1000];
+ 	for(int i=0;i<prey.length;i++){
+ 		prey[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250, 0, 255);
+ 	}
+ 	predator = new Bacteria[1000];
+ 	
+ 	for(int i=0;i<predator.length;i++){
+ 		predator[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250,255,0);
  	}
  	//first = new Bacteria(250,250);
  	//second = new Bacteria(250,250);
@@ -19,41 +23,37 @@
  void draw()   
  {    
  	//move and show the bacteria  
- 	background(255); 
- 	for(int i=0;i<colony.length;i++){
- 		colony[i].move();
- 		colony[i].show();
+ 	background(0); 
+ 	for(int i=0;i<prey.length;i++){
+ 		prey[i].move();
+ 		prey[i].show();
+ 	}
+ 	for(int i=0;i<predator.length;i++){
+ 		predator[i].move();
+ 		predator[i].show();
  	}
  }  
  class Bacteria    
  { 
- 	int myX,myY,r,g,b,mySize;
- 	Bacteria(int x, int y)
+ 	int myX,myY,mySize,myR,myB;
+ 	Bacteria(int x, int y, int r, int b)
  	{
  		myX = x;
  		myY=y;
  		mySize=10;
- 		r=(int)(Math.random()*255+1);
- 		g=(int)(Math.random()*255+1);
- 		b=(int)(Math.random()*255+1);
+ 		myR = r;
+ 		myB=b;
  	}
  	void move()
  	{
- 		if(mouseX>myX){
-			myX += (int)(Math.random()*5)-1;
-		}else{
-			myX += (int)(Math.random()*5)-3;
-		}
-		if(mouseY>myY){
-			myY += (int)(Math.random()*5)-1;
-		}else{
-			myY += (int)(Math.random()*5)-3;
-		}
+ 		myX= myX+(int)(Math.random()*3-2);
+ 		myY= myY+(int)(Math.random()*3-1);
+
 
  	}
  	void show()
  	{
- 		fill(r,g,b);
+ 		fill(myR,0,myB);
  		ellipse(myX,myY,mySize,mySize);
  	}
  }    
