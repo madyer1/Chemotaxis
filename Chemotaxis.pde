@@ -1,24 +1,19 @@
  //declare bacteria variables here   
- Bacteria first;
- Bacteria second;
  Bacteria[] prey;
- Bacteria[] predator;
+ Bacteria predator;
  
  void setup()   
  {     
  	size(1000,1000);
- 	frameRate(70);
- 	prey = new Bacteria[1000];
+ 	frameRate(50);
+
+ 	prey = new Bacteria[10];
  	for(int i=0;i<prey.length;i++){
- 		prey[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250, 0, 255);
+ 		prey[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250, 0, 255,10,3);
  	}
- 	predator = new Bacteria[1000];
  	
- 	for(int i=0;i<predator.length;i++){
- 		predator[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250,255,0);
- 	}
- 	//first = new Bacteria(250,250);
- 	//second = new Bacteria(250,250);
+ 	predator= new Bacteria(500, 500,255,0,20,3);
+ 	
  }   
  void draw()   
  {    
@@ -28,27 +23,55 @@
  		prey[i].move();
  		prey[i].show();
  	}
- 	for(int i=0;i<predator.length;i++){
- 		predator[i].move();
- 		predator[i].show();
+ 		predator.move();
+ 		predator.show();
+ 	for(int i=0;i<prey.length;i++){
+ 		if(dist(predator.myX,predator.myY,prey[i].myX,prey[i].myY)<=20){
+ 			prey[i].myR = prey[i].myB = 0;
+ 			prey[i].myX = prey[i].myY = 2000;
+ 		}
  	}
+
  }  
  class Bacteria    
  { 
- 	int myX,myY,mySize,myR,myB;
- 	Bacteria(int x, int y, int r, int b)
+ 	int myX,myY,mySize,myR,myB,mySpeed;
+ 	Bacteria(int x, int y, int r, int b, int size, int speed)
  	{
  		myX = x;
- 		myY=y;
- 		mySize=10;
+ 		myY = y;
+ 		mySize = size;
  		myR = r;
- 		myB=b;
+ 		myB = b;
+ 		mySpeed = speed;
  	}
  	void move()
  	{
- 		myX= myX+(int)(Math.random()*3-2);
- 		myY= myY+(int)(Math.random()*3-1);
-
+ 		myX= myX+(int)(Math.random()*mySpeed)-1;
+ 		myY= myY+(int)(Math.random()*mySpeed)-1;
+ 		for(int i=0;i<prey.length;i++){
+ 			if(dist(predator.myX,predator.myY,prey[i].myX,prey[i].myY)<= 50){
+ 				if(predator.myX<prey[i].myX && predator.myY<prey[i].myY){
+ 					predator.myX += 2;
+ 					predator.myY += 2;
+ 				}
+ 				if(predator.myX>prey[i].myX && predator.myY>prey[i].myY){
+ 					predator.myX -= 2;
+ 					predator.myY -= 2;
+ 				}
+ 				if(predator.myX<prey[i].myX && predator.myY>prey[i].myY){
+ 					predator.myX += 2;
+ 					predator.myY -= 2;
+ 				}
+ 				if(predator.myX<prey[i].myX && predator.myY>prey[i].myY){
+ 					predator.myX += 2;
+ 					predator.myY -= 2;
+ 				}
+ 			
+ 			}
+ 		//if(predator.myX>prey.myX && predator.myY>prey.myY){
+ 
+ 		//}
 
  	}
  	void show()
