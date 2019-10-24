@@ -5,14 +5,14 @@
  void setup()   
  {     
  	size(1000,1000);
- 	frameRate(50);
+ 	frameRate(100);
 
- 	prey = new Bacteria[10];
+ 	prey = new Bacteria[200];
  	for(int i=0;i<prey.length;i++){
- 		prey[i]= new Bacteria((int)(Math.random()*500)+250, (int)(Math.random()*500)+250, 0, 255,10,3);
+ 		prey[i]= new Bacteria((int)(Math.random()*1000)+1, (int)(Math.random()*1000)+1, 0, 255,10,7);
  	}
  	
- 	predator= new Bacteria(500, 500,255,0,20,3);
+ 	predator= new Bacteria(500, 500,255,0,25,9);
  	
  }   
  void draw()   
@@ -47,10 +47,10 @@
  	}
  	void move()
  	{
- 		myX= myX+(int)(Math.random()*mySpeed)-1;
- 		myY= myY+(int)(Math.random()*mySpeed)-1;
+ 		myX= myX+(int)(Math.random()*mySpeed)-((mySpeed-1)/2);
+ 		myY= myY+(int)(Math.random()*mySpeed)-((mySpeed-1)/2);
  		for(int i=0;i<prey.length;i++){
- 			if(dist(predator.myX,predator.myY,prey[i].myX,prey[i].myY)<= 50){
+ 			if(dist(predator.myX,predator.myY,prey[i].myX,prey[i].myY)<= 100){
  				if(predator.myX<prey[i].myX && predator.myY<prey[i].myY){
  					predator.myX += 2;
  					predator.myY += 2;
@@ -63,15 +63,25 @@
  					predator.myX += 2;
  					predator.myY -= 2;
  				}
- 				if(predator.myX<prey[i].myX && predator.myY>prey[i].myY){
- 					predator.myX += 2;
- 					predator.myY -= 2;
+ 				if(predator.myX>prey[i].myX && predator.myY<prey[i].myY){
+ 					predator.myX -= 2;
+ 					predator.myY += 2;
  				}
- 			
  			}
- 		//if(predator.myX>prey.myX && predator.myY>prey.myY){
- 
- 		//}
+ 			
+ 		}
+ 		if(predator.myX>=990){
+ 			predator.myX -= 2;
+ 		}
+ 		if(predator.myX<=10){
+ 			predator.myX += 2;
+ 		}
+ 		if(predator.myY>=990){
+ 			predator.myY -= 2;
+ 		}
+ 		if(predator.myY<=10){
+ 			predator.myY += 2;
+ 		}
 
  	}
  	void show()
